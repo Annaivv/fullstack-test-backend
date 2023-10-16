@@ -1,12 +1,17 @@
 const express = require("express");
+const logger = require("morgan");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
 const dealsRouter = require("./routes/api/deals");
+
+app.use(logger(formatsLogger));
+app.use(cors());
+app.use(express.json());
 
 app.use("/api/deals", dealsRouter);
 
@@ -21,5 +26,3 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message });
 });
 module.exports = app;
-
-//mongodb+srv://Annaiv:<password>@cluster0.cneocyv.mongodb.net/?retryWrites=true&w=majority
