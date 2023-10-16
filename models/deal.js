@@ -26,6 +26,10 @@ const dealSchema = new Schema(
       type: Number,
       required: true,
     },
+    imageURL: {
+      type: String,
+      required: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
