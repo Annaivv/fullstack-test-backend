@@ -1,16 +1,16 @@
-const mongoose = require("mongoose");
-const { Client, Pool } = require("pg");
+//const mongoose = require("mongoose");
+const { Client } = require("pg");
 
-const { DB_HOST } = process.env;
+const { DB_HOST, PASSWORD } = process.env;
 
-const app = require("./app");
+// const app = require("./app");
 
 const client = new Client({
-  host: "localhost",
-  user: "postgres",
+  host: DB_HOST,
+  user: "admin",
   port: 5432,
-  password: "volpa",
-  database: "postgres",
+  password: PASSWORD,
+  database: "deals_kulu",
 });
 
 client.connect();
