@@ -38,6 +38,6 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message });
 });
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`App running on port ${port}.`);
 });
