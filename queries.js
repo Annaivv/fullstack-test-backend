@@ -9,6 +9,7 @@ const pool = new Pool({
   database: DB_NAME,
   password: DB_PASSWORD,
   port: 5432,
+  ssl: true,
 });
 
 const getDeals = (request, response) => {
@@ -17,9 +18,10 @@ const getDeals = (request, response) => {
       throw error;
     }
     response.status(200).json(results.rows);
+    console.log(results.rows);
   });
 };
 
 module.exports = {
-  getDeals,
+  getDeals: ctrlWrapper(getDeals),
 };
