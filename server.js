@@ -1,21 +1,17 @@
 //const mongoose = require("mongoose");
 const { Client } = require("pg");
 
-const { DB_HOST, PASSWORD } = process.env;
+const { DB_HOST } = process.env;
 
 // const app = require("./app");
 
 const client = new Client({
-  host: DB_HOST,
-  user: "admin",
-  port: 5432,
-  password: PASSWORD,
-  database: "deals_kulu",
+  DB_HOST,
 });
 
 client.connect();
 
-client.query("Select * from deals", (err, res) => {
+client.query("Select * from deals_kulu", (err, res) => {
   if (!err) {
     console.log(res.rows);
   } else {
