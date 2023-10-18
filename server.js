@@ -1,12 +1,15 @@
-//const mongoose = require("mongoose");
 const { Client } = require("pg");
+require("dotenv").config();
 
-const { DB_HOST } = process.env;
-
-// const app = require("./app");
+const { DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD } = process.env;
+console.log(DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD);
 
 const client = new Client({
-  DB_HOST,
+  host: DB_HOST,
+  user: DB_USERNAME,
+  port: 5432,
+  password: DB_PASSWORD,
+  database: DB_NAME,
 });
 
 client.connect();
@@ -19,16 +22,3 @@ client.query("Select * from deals", (err, res) => {
   }
   client.end();
 });
-
-// const { DB_HOST } = process.env;
-
-// mongoose.set("strictQuery", true);
-// mongoose
-//   .connect(DB_HOST)
-//   .then(() => {
-//     app.listen(4000, () => console.log("Server is running"));
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//     process.exit(1);
-//   });
