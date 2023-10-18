@@ -1,4 +1,7 @@
 const { Client } = require("pg");
+const express = require("express");
+const app = express();
+const port = 5432;
 require("dotenv").config();
 
 const { DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD } = process.env;
@@ -20,4 +23,8 @@ client.query("Select * from deals", (err, res) => {
     console.log(err.message);
   }
   client.end();
+});
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
