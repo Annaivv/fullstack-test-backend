@@ -1,51 +1,43 @@
-// const mongoose = require("mongoose");
-const { Client } = require("pg");
+const express = require("express");
+const logger = require("morgan");
+const bodyParser = require("body-parser");
+const app = express();
 const cors = require("cors");
-const app = require("./app");
-const port = 4000;
 require("dotenv").config();
-const { DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD } = process.env;
 
-// const { DB_HOST } = process.env;
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
-// mongoose.set("strictQuery", true);
-// mongoose
-//   .connect(DB_HOST)
-//   .then(() => {
-//     app.listen(4000, () => console.log("Server is running"));
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//     process.exit(1);
-//   });
+const port = 4000;
 
-// const { Client } = require("pg");
-// const cors = require("cors");
-// const express = require("express");
-// const app = express();
+const db = require("./queries");
 
-// const { DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD } = process.env;
-
-const client = new Client({
-  host: DB_HOST,
-  user: DB_USERNAME,
-  port: 5432,
-  password: DB_PASSWORD,
-  database: DB_NAME,
-});
-
-client.connect();
-
-client.query("Select * from deals", (err, res) => {
-  if (!err) {
-    console.log(res.rows);
-  } else {
-    console.log(err.message);
-  }
-  client.end();
-});
+app.use(logger(formatsLogger));
 app.use(cors());
 
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
+app.get("/", (request, response) => {
+  response.json({ info: "Node.js, Express, and Postgres API" });
+});
+
+app.get("/api/deals", db.getDeals);
+
+app.use((req, res) => {
+  res.status(404).json({
+    message: "Not found",
+  });
+});
+
+app.use((err, req, res, next) => {
+  const { status = 500, message = "Server error" } = err;
+  res.status(500).json({ message });
+});
+
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`App running on port ${port}.`);
 });
