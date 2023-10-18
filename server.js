@@ -1,7 +1,7 @@
 const { Client } = require("pg");
 const express = require("express");
 const app = express();
-const port = 5432;
+const port = 4000;
 require("dotenv").config();
 
 const { DB_HOST, DB_NAME, DB_USERNAME, DB_PASSWORD } = process.env;
