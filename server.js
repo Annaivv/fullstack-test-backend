@@ -11,7 +11,7 @@ const client = new Client({
 
 client.connect();
 
-client.query("Select * from deals_kulu", (err, res) => {
+client.query("Select * from deals", (err, res) => {
   if (!err) {
     console.log(res.rows);
   } else {
