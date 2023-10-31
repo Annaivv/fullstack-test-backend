@@ -12,6 +12,7 @@ const dealsRouter = require("./routes/api/deals");
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+app.use(express.static("public"));
 
 app.use("/api/deals", dealsRouter);
 
@@ -25,4 +26,5 @@ app.use((err, req, res, next) => {
   const { status = 500, message = "Server error" } = err;
   res.status(500).json({ message });
 });
+
 module.exports = app;
