@@ -5,9 +5,11 @@ const { DB_HOST, PORT } = process.env;
 
 mongoose
   .connect(DB_HOST)
-  .then(() => {
-    console.log(`Listening to port ${PORT}`);
-  })
+  .then(() =>
+    app.listen(PORT, () => {
+      console.log("Database connection successful");
+    })
+  )
   .catch((error) => {
     console.log(error.message);
     process.exit(1);
