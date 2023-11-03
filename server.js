@@ -1,7 +1,7 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = require("./app");
-require("dotenv").config();
 
 const { DB_HOST, PORT } = process.env;
 
